@@ -64,4 +64,12 @@ router.delete('/deleteCompany/:id', function (req, res) {
         res.send(e);
     });
 });
+
+router.get('/merchantCount', function (req, res) {
+     Company.find().count(function (err, count) {
+        res.json({
+            count
+        });
+    });
+});
 module.exports = router;
