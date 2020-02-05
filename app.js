@@ -7,6 +7,8 @@ const cors = require("cors");
 
 const loginRoute = require("./routes/login");
 const CompanyRegister = require("./routes/CompanyRegister");
+const topupRotue = require("./routes/merchantTopup");
+
 
 app.use(morgan("dev"));
 app.use(bodyparser.urlencoded({extended:false}));
@@ -15,6 +17,10 @@ app.use(cors());
 
 app.use("/login", loginRoute);
 app.use("/Company",CompanyRegister);
+app.use("/topup",topupRotue);
+
+
+
 
 //for handliing cors errors
 app.use((req, res, next) => {

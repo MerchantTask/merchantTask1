@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Company = require("../models/companyDetails");
 
+
 router.post("/companyRegister",(req,res)=>{
     const register = new Company({
         Name: req.body.name,
@@ -16,7 +17,7 @@ router.post("/companyRegister",(req,res)=>{
         .save()
         .then(result =>{
             res.status(201).json({
-                message_success:"Added Successful"
+                message_success:"Added Successfully"
             });
         })
         .catch(err => {
