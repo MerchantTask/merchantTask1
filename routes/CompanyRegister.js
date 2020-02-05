@@ -3,28 +3,24 @@ const router = express.Router();
 const Company = require("../models/companyDetails");
 
 
-router.post("/companyRegister",(req,res)=>{
-    const register = new Company({
-        Name: req.body.name,
-        Address: req.body.Address,
-        ContactPerson: req.body.ContactPerson,
-        ContactPersonEmail: req.body.ContactPersonEmail,
-        ContactPersonPhone: req.body.ContactPersonPhone,
-        CompanyEmail: req.body.CompanyEmail,
-        PAN: req.body.PAN
-    });
-    register
-        .save()
-        .then(result =>{
-            res.status(201).json({
-                message_success:"Added Successfully"
-            });
-        })
-        .catch(err => {
-            res.status(500).json({
-                message:err
-            });
-        });
+router.post("/addCompany",(req,res)=>{
+   
+        data = {
+            'company_name': req.body.company_name,
+            "address": req.body.address,
+            "contact_person": req.body.contact_person,
+            "contact_email": req.body.contact_email,
+            "contact_phone": req.body.contact_phone,
+            "company_email": req.body.company_email,
+            "pan": req.body.pan}
+    
+        var addCompany = new Company(data);
+        addCompany.save().then(function () {
+            res.send({
+                message: "Succesfull"
+            })
+        }); 
+
 });
 
 router.get('/allCompanies', function (req, res) {

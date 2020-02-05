@@ -2,28 +2,27 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const companySchema = new Schema({
-    Name:{
-        type:String
-
-    },
-    Address:{
+    company_name:{
         type:String
     },
-    ContactPerson:{
+    address:{
         type:String
     },
-    ContactPersonEmail:{
+    contact_person:{
         type:String
     },
-    ContactPersonPhone:{
+    contact_email:{
         type:String
     },
-    CompanyEmail:{
+    contact_phone:{
         type:String
     },
-    PAN:{
+    company_email:{
+        type:String
+    },
+    pan:{
         type:Number
     }
 });
-const Company = mongoose.model("CompanyDetails",companySchema);
+const Company = mongoose.model("companydetail",companySchema);
 module.exports = Company;
