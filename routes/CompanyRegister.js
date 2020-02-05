@@ -33,12 +33,11 @@ router.get('/allCompanies', function (req, res) {
 
 router.get('/fetchSingleCompany/:id', function (req, res) {
     var companyId = req.params.id.toString();
-
+console.log(companyId);
     Company.find({
         _id: companyId
     }).then(function (company) {
         res.send(company);
-
     }).catch(function (e) {
         res.send(e);
     });
