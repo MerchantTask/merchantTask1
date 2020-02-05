@@ -19,4 +19,11 @@ router.post("/addTopup",(req,res)=>{
         })
     }); 
 });
+router.get("/getTopup",function(req,res){
+    Merchant.find().then(function(merchant){
+        res.send(merchant);
+    }).catch(function (e) {
+        res.send(e);
+    })
+})
 module.exports = router;
