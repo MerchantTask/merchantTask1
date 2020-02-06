@@ -59,4 +59,41 @@ router.post("/", async function(req, res) {
     
 
   });
+
+  router.get('/getDetails/:id', function (req, res) {
+    var adminId = req.params.id.toString();
+
+    Admin.find({
+        _id: adminId
+    }).then(function (detail) {
+
+         res.send(detail[0].password);
+
+    }).catch(function (e) {
+        res.send(e);
+    });
+  });
+
+router.post("/changePassword/:id", function(req, res) {
+
+  if(req.body.oldPassword!==req.body.currentPassword){
+    res.json({
+      message: "Old Password didn't Match"
+  });
+  }
+  else{
+    adminId = req.params.id.toString();
+
+    Admin.findByIdAndUpdate(adminId, req.body, {
+        new: true
+    }).then(function (result) {
+      res.json({
+        message: "Password Changed"
+    });
+    }).catch(function (e) {
+        res.send(e);
+    });
+  }
+});
+
   module.exports = router;
