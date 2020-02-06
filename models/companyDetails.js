@@ -22,6 +22,9 @@ const companySchema = new Schema({
     },
     pan:{
         type:Number
+    },
+    verification_imagename:{
+        type:String
     }
 });
 const Company = mongoose.model("companydetail",companySchema);

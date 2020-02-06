@@ -14,6 +14,7 @@ app.use(morgan("dev"));
 app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json());
 app.use(cors());
+app.use('/uploads', express.static('./public/uploads'));
 
 app.use("/login", loginRoute);
 app.use("/Company",CompanyRegister);

@@ -1,7 +1,38 @@
 const express = require("express");
 const router = express.Router();
 const Company = require("../models/companyDetails");
+const multer = require('multer');
+const path = require('path');
 
+//uploads image
+var storage = multer.diskStorage({
+    destination: './public/uploads',
+    filename: (req, file, callback) => {
+        let ext = path.extname(file.originalname);
+        callback(null, file.fieldname + '-' + Date.now() + ext);
+    }
+});
+
+//validations
+var imageFileFilter = (req, file, cb) => {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|PNG|gif)$/)) {
+        return cb(new Error("You can upload only image files!"), false);
+    }
+    cb(null, true);
+};
+
+var upload = multer({
+    storage: storage,
+    fileFilter: imageFileFilter,
+    limits: {
+        fileSize: 1000000
+    }
+});
+
+//uploads image
+router.post('/upload', upload.single('imageFile'), (req, res) => {
+    res.json(req.file);
+});
 
 router.post("/addCompany",(req,res)=>{
    
@@ -12,7 +43,10 @@ router.post("/addCompany",(req,res)=>{
             "contact_email": req.body.contact_email,
             "contact_phone": req.body.contact_phone,
             "company_email": req.body.company_email,
-            "pan": req.body.pan}
+            "pan": req.body.pan,
+            "verification_imagename": req.body.verification_imagename
+            
+        }
     
         var addCompany = new Company(data);
         addCompany.save().then(function () {
