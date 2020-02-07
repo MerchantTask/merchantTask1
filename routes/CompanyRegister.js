@@ -106,4 +106,12 @@ router.get('/merchantCount', function (req, res) {
         });
     });
 });
+
+router.get('/merchantList', function (req, res) {
+    Company.find().then(function (Merchantlist) {
+       res.json(
+           Merchantlist
+       );
+   });
+});
 module.exports = router;

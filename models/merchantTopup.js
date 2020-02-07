@@ -15,10 +15,10 @@ const topupSchema = new Schema({
     remarks:{
         type:String
     },
-   
-    company_name:{
-        type:String,
-      
+    company_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'companyDetails',
+        required: true
     }
 });
 const merchanttopup = mongoose.model("merchantTopup",topupSchema);

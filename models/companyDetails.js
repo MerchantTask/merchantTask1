@@ -23,6 +23,10 @@ const companySchema = new Schema({
     pan:{
         type:Number
     },
+    current_balance:{
+        type:Number,
+        default:0
+    },
     verification_imagename:{
         type:String
     }
