@@ -31,12 +31,37 @@ router.post("/addTopup",(req,res)=>{
     }); 
 });
 router.get("/getTopup",function(req,res){
-    Merchant.find().then(function(merchant){
-        res.send(merchant);
+    // Merchant.find().then(function(merchant){
+    //     res.send(merchant);
        
-    }).catch(function (e) {
-        res.send(e);
+    // }).catch(function (e) {
+    //     res.send(e);
+    // })
+
+
+    Merchant.find()
+    .populate('company_id')
+    .exec()
+    .then(function (merchant) {
+
+        if (merchant) {
+            res.json({
+                merchants: merchant.map(doc => {
+                    return {
+                        _id: doc._id,
+                        topup_amount: doc.topup_amount,
+                        mode_of_payment: doc.mode_of_payment,
+                        date: doc.date,
+                        remarks: doc.remarks,
+                        company_id: doc.company_id
+                    };
+                })
+            })
+
+        }
+
     })
+
 });
 
 

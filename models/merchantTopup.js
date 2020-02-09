@@ -17,7 +17,7 @@ const topupSchema = new Schema({
     },
     company_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'companyDetails',
+        ref: 'companydetail',
         required: true
     }
 });
