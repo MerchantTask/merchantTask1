@@ -3,6 +3,12 @@ const router = express.Router();
 const Company = require("../models/companyDetails");
 const multer = require('multer');
 const path = require('path');
+var generator = require('generate-password');
+
+var password = generator.generate({
+    length: 10,
+    numbers: true
+});
 
 //uploads image
 var storage = multer.diskStorage({
@@ -44,8 +50,8 @@ router.post("/addCompany",(req,res)=>{
             "contact_phone": req.body.contact_phone,
             "company_email": req.body.company_email,
             "pan": req.body.pan,
-            "verification_imagename": req.body.verification_imagename
-            
+            "verification_imagename": req.body.verification_imagename,
+            "password":password
         }
     
         var addCompany = new Company(data);

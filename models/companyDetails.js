@@ -29,6 +29,9 @@ const companySchema = new Schema({
     },
     verification_imagename:{
         type:String
+    },
+    password:{
+        type:String
     }
 });
 const Company = mongoose.model("companydetail",companySchema);
