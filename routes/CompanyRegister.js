@@ -3,12 +3,10 @@ const router = express.Router();
 const Company = require("../models/companyDetails");
 const multer = require('multer');
 const path = require('path');
+var nodemailer = require('nodemailer');
 var generator = require('generate-password');
 
-var password = generator.generate({
-    length: 10,
-    numbers: true
-});
+
 
 //uploads image
 var storage = multer.diskStorage({
@@ -41,7 +39,36 @@ router.post('/upload', upload.single('imageFile'), (req, res) => {
 });
 
 router.post("/addCompany",(req,res)=>{
+    var password = generator.generate({
+        length: 10,
+        numbers: true
+    });
    
+    var transport = nodemailer.createTransport({
+        host: "smtp.mailtrap.io",
+        port: 2525,
+        auth: {
+          user: "95fa5dad731929",
+          pass: "6c073eaa6d70ab"
+        }
+      });
+
+      var mailOptions = {
+        from: 'noreply@xcelservices.com',
+        to: req.body.company_email,
+        subject: 'One time password',
+        text: 'Dear Merchant, your one time password is '+ password
+      };
+      
+      transport.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+
+      
         data = {
             'company_name': req.body.company_name,
             "address": req.body.address,

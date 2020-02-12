@@ -8,6 +8,8 @@ const cors = require("cors");
 const loginRoute = require("./routes/login");
 const CompanyRegister = require("./routes/CompanyRegister");
 const topupRotue = require("./routes/merchantTopup");
+const resetRoute = require("./routes/reset");
+const testRoute = require("./routes/test");
 
 
 app.use(morgan("dev"));
@@ -16,9 +18,11 @@ app.use(bodyparser.json());
 app.use(cors());
 app.use('/uploads', express.static('./public/uploads'));
 
+app.use("/test", testRoute);
 app.use("/login", loginRoute);
 app.use("/Company",CompanyRegister);
 app.use("/topup",topupRotue);
+app.use("/reset",resetRoute);
 
 
 

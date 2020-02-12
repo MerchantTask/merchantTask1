@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
 const Admin = require("../models/admin");
-
+const bcrypt = require('bcrypt');
 router.post("/register", (req, res) => {
 
   const user = new Admin({
@@ -63,40 +63,97 @@ var id= user._id;
 
 router.put("/changePassword/:id", function (req, res) {
   var adminId = req.params.id.toString();
-  var oldPassword = "";
-
-  Admin.find({
-    _id: adminId
-  }).then(function (detail) {
-
-    oldPassword = detail[0].password;
-  
-    if (oldPassword !== req.body.currentPassword) {
-      res.json({
-        message: "Old Password didn't Match"
-      });
-    } 
-    else if(oldPassword == req.body.password){
-      res.json({
-        message: "You used same old password. Please use different password"
-      });
-    }
-    else {
-
-      Admin.findByIdAndUpdate(adminId, req.body, {
-        new: true
-      }).then(function (result) {
-        res.json({
-          message: "Password Changed"
-        });
-      }).catch(function (e) {
-        res.send(e);
-      });
-    }
-
-  }).catch(function (e) {
-    res.send(e);
+    const saltRounds = 10;
+    var currentPassword = req.body.currentPassword;
+   
+    var oldPassword;
+if(req.body.password==currentPassword){
+  res.json({
+    message: "You used same password"
   });
+}
+else{
+    Admin.find({
+        _id: adminId
+      }).then(function (detail) {
+    
+        oldPassword = detail[0].password; //old hashed password
+  
+        bcrypt.compare(currentPassword, oldPassword, function (err, isMatch) {
+            if (err) {
+                throw err
+            } else if (!isMatch) {
+                res.json({
+                    message: "Old Password Doesn't Match"
+                  });
+            } else {
+
+                bcrypt.genSalt(saltRounds, function (err, salt) {
+                    if (err) {
+                      throw err
+                    } else {
+                      bcrypt.hash(req.body.password, salt, function(err, hash) {
+                        if (err) {
+                          throw err
+                        } else {
+                            Admin.findByIdAndUpdate({_id:adminId}, {$set:{password:hash}}, {
+                                new: true
+                              }).then(function (result) {
+                                res.json({
+                                  message: "Password Changed"
+                                });
+                              }).catch(function (e) {
+                                res.send(e);
+                              });   
+                        }
+                      })
+                    }
+                  })
+
+
+              
+            }
+        })
+
+     
+    })
+  }
+ 
+  // var adminId = req.params.id.toString();
+  // var oldPassword = "";
+
+  // Admin.find({
+  //   _id: adminId
+  // }).then(function (detail) {
+
+  //   oldPassword = detail[0].password;
+  
+  //   if (oldPassword !== req.body.currentPassword) {
+  //     res.json({
+  //       message: "Old Password didn't Match"
+  //     });
+  //   } 
+  //   else if(oldPassword == req.body.password){
+  //     res.json({
+  //       message: "You used same old password. Please use different password"
+  //     });
+  //   }
+  //   else {
+
+  //     Admin.findByIdAndUpdate(adminId, req.body, {
+  //       new: true
+  //     }).then(function (result) {
+  //       res.json({
+  //         message: "Password Changed"
+  //       });
+  //     }).catch(function (e) {
+  //       res.send(e);
+  //     });
+  //   }
+
+  // }).catch(function (e) {
+  //   res.send(e);
+  // });
 
 });
 
