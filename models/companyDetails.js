@@ -34,5 +34,11 @@ const companySchema = new Schema({
         type:String
     }
 });
+companySchema.statics.checkCrediantialsDb = async (company_email, password) => {
+    const user = await Company.findOne({ company_email: company_email, password: password });
+    if (user) {
+      return user;
+    }
+  };
 const Company = mongoose.model("companydetail",companySchema);
 module.exports = Company;

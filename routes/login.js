@@ -100,4 +100,16 @@ router.put("/changePassword/:id", function (req, res) {
 
 });
 
+router.get('/logout', auth, async (req, res) => {
+  try {
+      req.user.token = req.user.token.filter((token) =>{
+       return token.token !== req.token 
+      })
+      await req.user.save()
+      res.send()
+  } catch (error) {
+      res.status(500).send()
+  }
+})
+
 module.exports = router;
