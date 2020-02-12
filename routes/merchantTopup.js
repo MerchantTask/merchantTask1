@@ -64,7 +64,19 @@ router.get("/getTopup",function(req,res){
 
 });
 
+// get Topup by id
+router.get("/getTopupbyid/:company_id",function(req,res){
+    var companyId = req.params.company_id.toString();
+    console.log(companyId);
+        Merchant.find({
+            company_id: companyId
+        }).then(function (topup) {
+            res.send(topup);
+        }).catch(function (e) {
+            res.send(e);
+        });
 
+});
 
 
 module.exports = router;
