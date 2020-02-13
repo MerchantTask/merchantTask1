@@ -19,27 +19,19 @@ router.post("/addTopup",(req,res)=>{
       Company.findByIdAndUpdate(req.body.company_id,{ $inc: { current_balance: req.body.topup_amount} }, {
             new: true
         }).then(function (company) {
-            res.send(company);
-        }).catch(function (e) {
-            res.send(e);
-        });
             res.send({
                 message: "Succesfull"
             });
+        }).catch(function (e) {
+            res.send(e);
+        });
+           
         
        
     }); 
 });
 router.get("/getTopup",function(req,res){
-    // Merchant.find().then(function(merchant){
-    //     res.send(merchant);
-       
-    // }).catch(function (e) {
-    //     res.send(e);
-    // })
-
-
-    Merchant.find()
+       Merchant.find()
     .populate('company_id')
     .exec()
     .then(function (merchant) {
@@ -54,7 +46,9 @@ router.get("/getTopup",function(req,res){
                         date: doc.date,
                         remarks: doc.remarks,
                         company_id: doc.company_id
+                        
                     };
+                  
                 })
             })
 

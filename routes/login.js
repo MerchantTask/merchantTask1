@@ -59,7 +59,10 @@ var id= user._id;
 
 
 });
-
+router.get('/users/me', auth, async(req, res) => {
+  // View logged in user profile
+  res.send(req.user);
+})
 
 router.put("/changePassword/:id", function (req, res) {
   var adminId = req.params.id.toString();
@@ -119,42 +122,17 @@ else{
     })
   }
  
-  // var adminId = req.params.id.toString();
-  // var oldPassword = "";
-
-  // Admin.find({
-  //   _id: adminId
-  // }).then(function (detail) {
-
-  //   oldPassword = detail[0].password;
-  
-  //   if (oldPassword !== req.body.currentPassword) {
-  //     res.json({
-  //       message: "Old Password didn't Match"
-  //     });
-  //   } 
-  //   else if(oldPassword == req.body.password){
-  //     res.json({
-  //       message: "You used same old password. Please use different password"
-  //     });
-  //   }
-  //   else {
-
-  //     Admin.findByIdAndUpdate(adminId, req.body, {
-  //       new: true
-  //     }).then(function (result) {
-  //       res.json({
-  //         message: "Password Changed"
-  //       });
-  //     }).catch(function (e) {
-  //       res.send(e);
-  //     });
-  //   }
-
-  // }).catch(function (e) {
-  //   res.send(e);
-  // });
-
 });
 
+router.post('/users/me/logout', auth, async (req, res) => {
+  try {
+    req.user.tokens = [];
+    await req.user.save();
+    res.status("201").json({
+      message: "logged out"
+    });
+  } catch (e) {
+    res.status(500).send();
+  }
+})
 module.exports = router;
