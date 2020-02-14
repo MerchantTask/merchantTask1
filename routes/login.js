@@ -25,7 +25,7 @@ router.post("/register", (req, res) => {
 });
 
 
-//route for user login
+//route for admin login
 router.post("/", async function (req, res) {
   if (req.body.username == "") {
     res.json({
@@ -64,7 +64,7 @@ router.get('/users/me', auth, async(req, res) => {
   res.send(req.user);
 })
 
-router.put("/changePassword/:id", function (req, res) {
+router.put("/changePassword/:id",auth, function (req, res) {
   var adminId = req.params.id.toString();
     const saltRounds = 10;
     var currentPassword = req.body.currentPassword;

@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("../middleware/auth");
 const Merchant = require("../models/merchantTopup");
 const Company = require("../models/companyDetails");
 
-router.post("/addTopup",(req,res)=>{
+router.post("/addTopup",auth,(req,res)=>{
    
     var date = new Date();
     data = {

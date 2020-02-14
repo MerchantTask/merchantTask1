@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Company = require("../models/companyDetails");
+const auth = require("../middleware/auth");
 const multer = require('multer');
 const path = require('path');
 var nodemailer = require('nodemailer');
@@ -43,7 +44,7 @@ router.post('/upload', upload.single('imageFile'), (req, res) => {
 
 
 
-router.post("/addCompany",(req,res)=>{
+router.post("/addCompany",auth,(req,res)=>{
     var password = generator.generate({
         length: 10,
         numbers: true
@@ -169,7 +170,7 @@ console.log(companyId);
 
 });
 
-router.put('/updateCompany/:id', function (req, res) {
+router.put('/updateCompany/:id',auth, function (req, res) {
     CompanyId = req.params.id.toString();
 
     Company.findByIdAndUpdate(CompanyId, req.body, {
@@ -180,7 +181,7 @@ router.put('/updateCompany/:id', function (req, res) {
         res.send(e);
     });
 });
-router.delete('/deleteCompany/:id', function (req, res) {
+router.delete('/deleteCompany/:id', auth,function (req, res) {
     Company.findByIdAndDelete(req.params.id).then(function (company) {
         res.json({
             message: "Deleted Successfully"
@@ -207,7 +208,7 @@ router.get('/merchantList', function (req, res) {
 });
 
 
-router.put("/merchantChangePassword/:id", function (req, res) {
+router.put("/merchantChangePassword/:id",auth, function (req, res) {
     var merchantId = req.params.id.toString();
       const saltRounds = 10;
       var currentPassword = req.body.currentPassword;
