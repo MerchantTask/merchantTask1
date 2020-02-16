@@ -1,29 +1,59 @@
 const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
+const validator = require('validator')
+var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
 const companySchema = new Schema({
     company_name:{
-        type:String
+        type:String,
+        unique: true,
+        lowercase: true,
+        required: [true, 'Your Company Name is Empty']
     },
     address:{
-        type:String
+        type:String,
+        lowercase: true,
+        required: [true, 'Your Address is Empty']
     },
     contact_person:{
-        type:String
+        type:String,
+        lowercase: true,
+        required: [true, 'Your Contact Person is Empty']
     },
     contact_email:{
-        type:String
+        type:String,
+        required: [true, 'Your email is Empty'],
+        unique: true,
+        lowercase: true,
+        validate:{
+          validator: validator.isEmail,
+          message: 'Enter valid email',
+          isAsync: false
+        }
     },
     contact_phone:{
-        type:String
+        type:String,
+        lowercase: true,
+        required: [true, 'Your Contact Number is Empty']
     },
     company_email:{
-        type:String
+        type:String,
+        required: [true, 'Your email is Empty'],
+        unique: true,
+        lowercase: true,
+        validate:{
+          validator: validator.isEmail,
+          message: 'Enter valid email',
+          isAsync: false
+        }
     },
     pan:{
-        type:Number
+        type:Number,
+        unique: true,
+        lowercase: true,
+        required: [true, 'Your Company Name is Empty']
     },
     current_balance:{
         type:Number,
@@ -33,7 +63,9 @@ const companySchema = new Schema({
         type:String
     },
     password:{
-        type:String
+        type:String,
+        required: [true, 'Your Password is Empty'],
+        minlength: [8, 'Password length is short'],
     },
     loginattempt:{
         type:Number,
@@ -47,6 +79,7 @@ const companySchema = new Schema({
     }]
 });
 
+companySchema.plugin(uniqueValidator);
 
 companySchema.statics.checkCrediantialsDb = async (company_name, password,callback) => {
     const user = await Company.findOne({

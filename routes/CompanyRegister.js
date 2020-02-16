@@ -98,10 +98,18 @@ router.post("/addCompany",auth,(req,res)=>{
                 }
             
                 var addCompany = new Company(data);
-                addCompany.save().then(function () {
-                    res.send({
-                        message: "Succesfull"
-                    })
+                addCompany
+                .save()
+                .then(function () {
+                  res.status(201).json({
+                    message_success: "Register Successful"
+                  
+                  })                
+                    }).catch(err => {
+                      console.log(err);
+                      res.status(500).send(
+                       err.errors
+                     );
                 }); 
         
                 
