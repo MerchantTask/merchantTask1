@@ -14,12 +14,10 @@ const companySchema = new Schema({
     },
     address:{
         type:String,
-        lowercase: true,
         required: [true, 'Your Address is Empty']
     },
     contact_person:{
         type:String,
-        lowercase: true,
         required: [true, 'Your Contact Person is Empty']
     },
     contact_email:{
@@ -35,7 +33,6 @@ const companySchema = new Schema({
     },
     contact_phone:{
         type:String,
-        lowercase: true,
         required: [true, 'Your Contact Number is Empty']
     },
     company_email:{
@@ -52,8 +49,7 @@ const companySchema = new Schema({
     pan:{
         type:Number,
         unique: true,
-        lowercase: true,
-        required: [true, 'Your Company Name is Empty']
+        required: [true, 'Your Pan is Empty']
     },
     current_balance:{
         type:Number,

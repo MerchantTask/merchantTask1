@@ -23,13 +23,19 @@ router.post("/addTopup",auth,(req,res)=>{
             res.send({
                 message: "Succesfull"
             });
-        }).catch(function (e) {
+        }) .catch(function (e) {
             res.send(e);
         });
            
         
        
-    }); 
+    }).catch(err => {
+        res.status(500).send(
+         err.errors
+               );
+      
+      });
+
 });
 router.get("/getTopup",function(req,res){
        Merchant.find()
