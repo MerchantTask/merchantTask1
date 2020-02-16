@@ -9,6 +9,7 @@ const loginRoute = require("./routes/login");
 const CompanyRegister = require("./routes/CompanyRegister");
 const topupRotue = require("./routes/merchantTopup");
 const resetRoute = require("./routes/reset");
+const testRoute = require("./routes/test");
 
 
 
@@ -23,6 +24,7 @@ app.use("/login", loginRoute);
 app.use("/Company",CompanyRegister);
 app.use("/topup",topupRotue);
 app.use("/reset",resetRoute);
+app.use("/test",testRoute);
 
 
 
