@@ -10,8 +10,7 @@ const CompanyRegister = require("./routes/CompanyRegister");
 const topupRotue = require("./routes/merchantTopup");
 const resetRoute = require("./routes/reset");
 const testRoute = require("./routes/test");
-
-
+const productRoute = require("./routes/product");
 
 app.use(morgan("dev"));
 app.use(bodyparser.urlencoded({extended:false}));
@@ -25,7 +24,7 @@ app.use("/Company",CompanyRegister);
 app.use("/topup",topupRotue);
 app.use("/reset",resetRoute);
 app.use("/test",testRoute);
-
+app.use("/",productRoute);
 
 
 
