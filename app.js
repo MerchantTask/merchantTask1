@@ -11,6 +11,7 @@ const topupRotue = require("./routes/merchantTopup");
 const resetRoute = require("./routes/reset");
 const testRoute = require("./routes/test");
 const productRoute = require("./routes/product");
+const salesRoute = require('./routes/sales');
 
 app.use(morgan("dev"));
 app.use(bodyparser.urlencoded({extended:false}));
@@ -25,6 +26,7 @@ app.use("/topup",topupRotue);
 app.use("/reset",resetRoute);
 app.use("/test",testRoute);
 app.use("/",productRoute);
+app.use("/",salesRoute);
 
 
 

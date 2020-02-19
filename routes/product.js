@@ -24,4 +24,16 @@ router.get("/getProduct",function(req,res){
         res.send(e);
     });
 });
+router.get('/getdata/:id', function (req, res) {
+    var id = req.params.id.toString();
+console.log(id);
+    Sales.find({
+        _id: id
+    }).then(function (data) {
+        res.send(data[0]);
+    }).catch(function (e) {
+        res.send(e);
+    });
+
+});
 module.exports=router
