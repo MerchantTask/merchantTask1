@@ -216,7 +216,7 @@ router.get('/merchantList', function (req, res) {
 });
 
 
-router.put("/merchantChangePassword/:id",auth, function (req, res) {
+router.put("/merchantChangePassword/:id", function (req, res) {
     var merchantId = req.params.id.toString();
       const saltRounds = 10;
       var currentPassword = req.body.currentPassword;
