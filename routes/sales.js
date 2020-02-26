@@ -4,6 +4,10 @@ const Sales = require("../models/sales");
 const Company = require("../models/companyDetails");
 
 router.post("/Addtocart",(req,res)=>{
+    Sales.findOne({product_id:req.body.product_id, company_id:req.body.company_id }, function (err, user) {
+        if(user){
+             res.send({message:"Already Added"});
+        }else{
     data={
         "product_name": req.body.product_name,
         "quantity" :req.body.quantity,
@@ -11,28 +15,22 @@ router.post("/Addtocart",(req,res)=>{
         "price"    :req.body.price,
         "image"    : req.body.image,
         "remarks"  :req.body.remarks,
-        "company_id"  :req.body.company_id
+        "company_id"  :req.body.company_id,
+        "product_id" : req.body.product_id
     }
     const productAdd = new Sales(data);
     productAdd.save().then(function(){
-        Company.findByIdAndUpdate(req.body.company_id,{
-            new: true
+        
         }).then(function (data) {
-            res.send({
+            res.json({
                 message: "Succesfull"
             });
         }) .catch(function (e) {
             res.send(e);
         });
            
-        
-       
-    }).catch(err => {
-        res.status(500).send(
-         err.errors
-               );
-      
-      });
+    }
+});
 });
 router.get("/getAddtocart",function(req,res){
     Sales.find().then(function(getproduct){

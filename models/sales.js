@@ -24,7 +24,12 @@ const salesSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'companydetail',
         required: true
-    }
+    },
+    product_id:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Sales",
+        required: true
+        }
 });
 
 const AddtoCart = mongoose.model("addtoCart",salesSchema);
