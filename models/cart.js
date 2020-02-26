@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const salesSchema = new Schema({
+const cartSchema = new Schema({
     product_name: {
         type:String
     },
@@ -27,10 +27,10 @@ const salesSchema = new Schema({
     },
     product_id:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Sales",
+        ref:"product",
         required: true
         }
 });
 
-const AddtoCart = mongoose.model("addtoCart",salesSchema);
-module.exports = AddtoCart;
+const Cart = mongoose.model("addtoCart",cartSchema);
+module.exports = Cart;

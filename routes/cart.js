@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Sales = require("../models/sales");
-const Company = require("../models/companyDetails");
+const Sales = require("../models/cart");
+const Company = require("../models/merchantDetails");
 
 router.post("/Addtocart",(req,res)=>{
     Sales.findOne({product_id:req.body.product_id, company_id:req.body.company_id }, function (err, user) {
@@ -32,6 +32,16 @@ router.post("/Addtocart",(req,res)=>{
     }
 });
 });
+
+router.delete('/removeFormCart/:id', function (req, res) {
+    id = req.params.id.toString();
+    Sales.findByIdAndDelete(id).then(function () {
+        res.send({
+            message: "succesfully removed"
+        })
+    })
+
+})
 router.get("/getAddtocart",function(req,res){
     Sales.find().then(function(getproduct){
         res.send(getproduct);

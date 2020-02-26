@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
 const Merchant = require("../models/merchantTopup");
-const Company = require("../models/companyDetails");
+const Company = require("../models/merchantDetails");
 
 router.post("/addTopup",auth,(req,res)=>{
    
@@ -17,7 +17,7 @@ router.post("/addTopup",auth,(req,res)=>{
 
     var merchantTopup = new Merchant(data);
     merchantTopup.save().then(function (topup) {
-      Company.findByIdAndUpdate(req.body.company_id,{ $inc: { current_balance: req.body.topup_amount} }, {
+      Company.findByIdAndUpdate(req.body.company_id,{ $inc: { current_balance: -req.body.topup_amount} }, {
             new: true
         }).then(function (company) {
             res.send({
