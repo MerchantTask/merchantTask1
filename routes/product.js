@@ -8,7 +8,8 @@ router.post("/productAdd",(req,res)=>{
         "quantity" :req.body.quantity,
         "details"  : req.body.details,
         "price"    :req.body.price,
-        "image"    : req.body.image
+        "image"    : req.body.image,
+        "merchant_id"    : req.body.merchant_id
     }
     const productAdd = new Sales(data);
     productAdd.save().then(function(){
@@ -17,9 +18,20 @@ router.post("/productAdd",(req,res)=>{
         })
     });
 });
+router.get("/getmerchantProduct/:id",function(req,res){
+    var id = req.params.id.toString();
+  
+    Sales.find({merchant_id: id}).limit(4).then(function(getProduct){
+        res.send(getProduct);
+    }).catch(function (e){
+        res.send(e);
+    });
+});
+
 router.get("/getProduct",function(req,res){
-    Sales.find().then(function(Addproduct){
-        res.send(Addproduct);
+  
+    Sales.find().limit(10).then(function(getProduct){
+        res.send(getProduct);
     }).catch(function (e){
         res.send(e);
     });

@@ -16,7 +16,12 @@ const productSchema = new Schema({
     },
     image:{
         type:String
-    }
+    },
+    merchant_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'companydetail',
+        required: true
+    },
 });
 
 const Product = mongoose.model("product",productSchema);
