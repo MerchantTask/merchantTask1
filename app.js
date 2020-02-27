@@ -12,6 +12,8 @@ const resetRoute = require("./routes/reset");
 const testRoute = require("./routes/test");
 const productRoute = require("./routes/product");
 const cartRoute = require('./routes/cart');
+const userRoute = require("./routes/userRegister");
+
 
 app.use(morgan("dev"));
 app.use(bodyparser.urlencoded({extended:false}));
@@ -27,6 +29,7 @@ app.use("/reset",resetRoute);
 app.use("/test",testRoute);
 app.use("/",productRoute);
 app.use("/",cartRoute);
+app.use("/user",userRoute);
 
 
 

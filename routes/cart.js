@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Sales = require("../models/cart");
-const Company = require("../models/merchantDetails");
+// const Company = require("../models/merchantDetails");
 
 router.post("/Addtocart",(req,res)=>{
-    Sales.findOne({product_id:req.body.product_id, company_id:req.body.company_id }, function (err, user) {
+    Sales.findOne({product_id:req.body.product_id, user_id:req.body.user_id }, function (err, user) {
         if(user){
              res.send({message:"Already Added"});
         }else{
@@ -15,7 +15,7 @@ router.post("/Addtocart",(req,res)=>{
         "price"    :req.body.price,
         "image"    : req.body.image,
         "remarks"  :req.body.remarks,
-        "company_id"  :req.body.company_id,
+        "user_id"  :req.body.user_id,
         "product_id" : req.body.product_id
     }
     const productAdd = new Sales(data);
@@ -50,11 +50,11 @@ router.get("/getAddtocart",function(req,res){
     });
 });
 
-router.get("/getAddtocart/:company_id",function(req,res){
-    var company_id = req.params.company_id;
-    console.log(company_id);
+router.get("/getAddtocart/:user_id",function(req,res){
+     user_id = req.params.user_id.toString();
+    console.log(user_id);
         Sales.find({
-            company_id: company_id
+            user_id: user_id
         }).then(function (addtocart) {
             res.send(addtocart);
         }).catch(function (e) {

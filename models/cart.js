@@ -20,9 +20,9 @@ const cartSchema = new Schema({
     remarks : {
         type:String
     },
-    company_id: {
+    user_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'companydetail',
+        ref: 'userRegister',
         required: true
     },
     product_id:{
