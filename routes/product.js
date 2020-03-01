@@ -48,7 +48,7 @@ console.log(id);
     });
 
 });
-//serarxh
+//search
 router.post('/search',function(req,res){
     var product_name = req.body.product_name;
     Sales.find({
@@ -60,4 +60,14 @@ router.post('/search',function(req,res){
         res.send(e);
     });
 });
+// Remove product merchent
+router.delete('/removeProduct/:id', function (req, res) {
+    id = req.params.id.toString();
+    Sales.findByIdAndDelete(id).then(function () {
+        res.send({
+            message: "succesfully removed"
+        })
+    })
+
+})
 module.exports=router
