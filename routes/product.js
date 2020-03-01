@@ -48,4 +48,16 @@ console.log(id);
     });
 
 });
+//serarxh
+router.post('/search',function(req,res){
+    var product_name = req.body.product_name;
+    Sales.find({
+        "product_name": new RegExp(product_name,'i')
+    }).then(function (search) {
+        res.send(search);
+
+    }).catch(function (e) {
+        res.send(e);
+    });
+});
 module.exports=router
