@@ -13,7 +13,7 @@ const testRoute = require("./routes/test");
 const productRoute = require("./routes/product");
 const cartRoute = require('./routes/cart');
 const userRoute = require("./routes/userRegister");
-
+const orderRoute = require("./routes/order");
 
 app.use(morgan("dev"));
 app.use(bodyparser.urlencoded({extended:false}));
@@ -30,7 +30,7 @@ app.use("/test",testRoute);
 app.use("/",productRoute);
 app.use("/",cartRoute);
 app.use("/user",userRoute);
-
+app.use("/",orderRoute);
 
 
 //for handliing cors errors

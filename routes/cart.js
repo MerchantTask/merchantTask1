@@ -86,30 +86,4 @@ router.get("/getAddtocart/:user_id",function(req,res){
         });
 
 });
-router.put("/buy/:id",function(req,res){
-    id = req.params.product_id.toString();
-    Sales.updateMany({
-        _id : { $in : id}        // conditions
-    }, {
-        $inc: { quantity: -req.body.quantity},
-
-        $set: {remarks:req.body.remarks} // document
-    },function(err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("result");
-        }
-    });
-});
-    //  Sales.findByIdAndUpdate(id,{$set:{remarks:req.body.remarks, $inc: { quantity: req.body.quantity}}} , {
-    //         new: true
-    //     }).then(function (company) {
-    //         res.send(company);
-    //     }).catch(function (e) {
-    //         res.send(e);
-    //     });
-    // });
-
-
 module.exports=router
