@@ -9,11 +9,6 @@ router.post("/Addtocart",(req,res)=>{
              res.send({message:"Already Added"});
         }else{
     data={
-        "product_name": req.body.product_name,
-        "quantity" :req.body.quantity,
-        "details"  : req.body.details,
-        "price"    :req.body.price,
-        "image"    : req.body.image,
         "remarks"  :req.body.remarks,
         "user_id"  :req.body.user_id,
         "product_id" : req.body.product_id
@@ -32,6 +27,35 @@ router.post("/Addtocart",(req,res)=>{
     }
 });
 });
+router.get("/getCart/:user_id",function(req,res){
+    user_id = req.params.user_id.toString();
+    Sales.find({user_id: user_id})
+ .populate('product_id')
+ .exec()
+ .then(function (cart) {
+
+     if (cart) {
+         res.json({
+             carts: cart.map(doc => {
+                 return {
+                     _id: doc._id,
+                     user_id: doc.user_id,
+                     remarks: doc.remarks,
+                     product_id: doc.product_id
+                     
+                 };
+                
+               
+             })
+             
+         })
+      
+     }
+ })
+
+});
+
+
 
 router.delete('/removeFormCart/:id', function (req, res) {
     id = req.params.id.toString();
@@ -62,5 +86,30 @@ router.get("/getAddtocart/:user_id",function(req,res){
         });
 
 });
+router.put("/buy/:id",function(req,res){
+    id = req.params.product_id.toString();
+    Sales.updateMany({
+        _id : { $in : id}        // conditions
+    }, {
+        $inc: { quantity: -req.body.quantity},
+
+        $set: {remarks:req.body.remarks} // document
+    },function(err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("result");
+        }
+    });
+});
+    //  Sales.findByIdAndUpdate(id,{$set:{remarks:req.body.remarks, $inc: { quantity: req.body.quantity}}} , {
+    //         new: true
+    //     }).then(function (company) {
+    //         res.send(company);
+    //     }).catch(function (e) {
+    //         res.send(e);
+    //     });
+    // });
+
 
 module.exports=router
