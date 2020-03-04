@@ -72,7 +72,12 @@ const companySchema = new Schema({
         type: String,
         required: true
       }
-    }]
+    }],
+    apikey:{
+      type:String,
+      required:true
+    }
+  
 });
 
 companySchema.plugin(uniqueValidator);

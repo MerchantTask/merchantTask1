@@ -7,7 +7,7 @@ const path = require('path');
 var nodemailer = require('nodemailer');
 var generator = require('generate-password');
 const bcrypt = require('bcrypt');
-
+const uuidAPIKey = require('uuid-apikey');
 
 
 //uploads image
@@ -50,7 +50,8 @@ router.post("/addCompany",auth,(req,res)=>{
         numbers: true
     });
    
-
+    var apikey = uuidAPIKey.create();
+    console.log(apikey)
     const saltRounds = 10;
 
     bcrypt.genSalt(saltRounds, function (err, salt) {
@@ -94,7 +95,8 @@ router.post("/addCompany",auth,(req,res)=>{
                     "company_email": req.body.company_email,
                     "pan": req.body.pan,
                     "verification_imagename": req.body.verification_imagename,
-                    "password":hashedPassword
+                    "password":hashedPassword,
+                    "apikey":apikey.apiKey
                 }
             
                 var addCompany = new Company(data);
@@ -275,4 +277,6 @@ router.put("/merchantChangePassword/:id", function (req, res) {
     }
   
   });
+
+
 module.exports = router;
